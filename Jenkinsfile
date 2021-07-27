@@ -14,8 +14,7 @@ pipeline {
      post {
           success {
           }
-          failure {
-          }
-     }  
-
-}    
+          failure }
+        }
+    }
+}
