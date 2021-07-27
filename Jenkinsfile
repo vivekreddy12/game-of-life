@@ -11,7 +11,8 @@ pipeline {
                steps {
                  sh 'mvn package'
                }
-        }
+          }
+     }
      post {
         sucess{
              archive '**/gameoflife.war'
