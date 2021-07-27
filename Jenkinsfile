@@ -10,14 +10,12 @@ pipeline {
         stage('build') {
             steps {
                 sh 'mvn package'
-     post {
-          sucess{
-          {
-          failure{
-
-     
-     
             }
-        }
-    }
+     post {
+          success {
+          }
+          failure {
+          }
+     }   
+    
 }
