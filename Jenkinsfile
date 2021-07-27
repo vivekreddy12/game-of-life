@@ -14,11 +14,11 @@ pipeline {
           }
      }
      post {
-        sucess{
+          sucess{
              archive '**/gameoflife.war'
              junit '**/TEST-*.xml'
-        }
-    }
+          }
+     }
 }
         
 
