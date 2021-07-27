@@ -1,6 +1,10 @@
 
 pipeline {
     agent { label 'JAVA'}
+    triggers {
+         cron ('H****')
+         pollscm ('*****')
+    }
     stages {
           stage('scm') {
             steps {
