@@ -11,12 +11,15 @@ pipeline {
                steps {
                  sh 'mvn package'
                }
+        }
      post {
-          success {
-          }
-          failure {
-          }
+        sucess{
+             archive '**/gameoflife.war'
+             junit '**/TEST-*.xml'
+        }
     }
-}        
- 
+}
+        
+
+     
     
