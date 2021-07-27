@@ -1,3 +1,4 @@
+
 pipeline {
     agent { label 'JAVA'}
     stages {
@@ -7,18 +8,18 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/vivekreddy12/game-of-life.git'
                }
           }
-        stage('build') {
+          stage('build') {
                steps {
                  sh 'mvn package'
                }
           }
      }
-     post {
-          sucess{
-             archive '**/gameoflife.war'
-             junit '**/TEST-*.xml'
+          post {
+            sucess{
+              archive '**/gameoflife.war'
+              junit '**/TEST-*.xml'
+            }
           }
-     }
 }
         
 
