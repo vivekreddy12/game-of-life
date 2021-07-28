@@ -11,6 +11,10 @@ pipeline {
             environment {
               DUMMY='FUN'
             }
+            options{
+              timeout (time:1,unit:'HOURS')
+              entry(2)
+            }
             steps {
 
                 git branch: 'master', url: 'https://github.com/vivekreddy12/game-of-life.git'
@@ -21,6 +25,8 @@ pipeline {
                  echo env.DUMMY
                  echo env.$GIT_URL
                  timeout(time:10, unit: 'MINUTES') {
+                 retry (3) 'maven clearpackage'{
+                 }
                  sh 'mvn package'
                  } 
                }
