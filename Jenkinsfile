@@ -25,9 +25,8 @@ pipeline {
                  echo env.DUMMY
                  echo env.$GIT_URL
                  timeout(time:10, unit: 'MINUTES') {
-                 retry (3) 'maven clearpackage'{
-                 }
-                 sh 'mvn package'
+                 retry (3) {
+                   sh 'mvn package'
                  } 
                }
           }
