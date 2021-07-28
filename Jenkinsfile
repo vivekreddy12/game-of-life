@@ -6,7 +6,7 @@ pipeline {
          pollSCM ('* * * * *')
     }
     options{
-              timeout (time:1,unit:'HOURS')
+              timeout (time: 10,m unit: 'HOURS')
               retry(2)
             }
     stages {
@@ -22,7 +22,7 @@ pipeline {
                steps {
                  echo env.DUMMY
                  echo env.$GIT_URL
-                 timeout(time:10, unit: 'MINUTES') 
+                 timeout (time: 10, unit: 'MINUTES') 
                  retry (3) {
                    sh 'set'
                    sh 'mvn package'
