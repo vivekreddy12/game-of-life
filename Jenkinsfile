@@ -22,21 +22,21 @@ pipeline {
                steps {
                  echo env.DUMMY
                  echo env.$GIT_URL
-                 timeout(time:10, unit: 'MINUTES') {
+                 timeout(time:10, unit: 'MINUTES') 
                  retry (3) {
+                   sh 'set'
                    sh 'mvn package'
                   }
-               }
+                }
           }
-     }
-          post {
+    }
+                post {
             success{
               archive '**/gameoflife.war'
               junit '**/TEST-*.xml'
             }
           }
 }
-        
+             
 
-     
-    
+              
