@@ -5,19 +5,18 @@ pipeline {
          cron ('H * * * *')
          pollSCM ('* * * * *')
     }
+    options{
+              timeout (time:1,unit:'HOURS')
+              entry(2)
+            }
     stages {
           stage('scm') { 
             environment {
               DUMMY='FUN'
             }
-            options{
-              timeout (time:1,unit:'HOURS')
-              entry(2)
-            }
-            steps {
-
+              steps {
                 git branch: 'master', url: 'https://github.com/vivekreddy12/game-of-life.git'
-               }
+              }
           }
           stage('build') {
                steps {
@@ -26,8 +25,7 @@ pipeline {
                  timeout(time:10, unit: 'MINUTES') {
                  retry (3) {
                    sh 'mvn package'
-
-                 } 
+                  }
                }
           }
      }
