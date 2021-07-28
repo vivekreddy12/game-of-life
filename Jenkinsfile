@@ -29,12 +29,12 @@ pipeline {
                 }
           }
     }
-    post {
-        success{
-           archive '**/gameoflife.war'
-           junit '**/TEST-*.xml'
-        }
-    }
+          post {
+             success{
+             archive '**/gameoflife.war'
+             junit '**/TEST-*.xml'
+             }
+          }
 }
              
 
