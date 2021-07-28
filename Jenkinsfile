@@ -3,10 +3,9 @@ pipeline {
     agent { label 'JAVA'}
     triggers {
          cron ('H * * * *')
-         pollSCM ('* * * * *')
     }
     options{
-      timeout (time: 10, unit: 'HOURS')
+      timeout (time: 10, unit: 'MINUTES')
         retry(2)
     }
     stages {
@@ -30,12 +29,12 @@ pipeline {
                 }
           }
     }
-                post {
-            success{
-              archive '**/gameoflife.war'
-              junit '**/TEST-*.xml'
-            }
-          }
+    post {
+        success{
+           archive '**/gameoflife.war'
+           junit '**/TEST-*.xml'
+        }
+    }
 }
              
 
