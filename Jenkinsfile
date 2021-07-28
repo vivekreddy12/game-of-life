@@ -7,7 +7,7 @@ pipeline {
     }
     options{
               timeout (time:1,unit:'HOURS')
-              entry(2)
+              retry(2)
             }
     stages {
           stage('scm') { 
