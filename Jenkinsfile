@@ -9,7 +9,7 @@ pipeline {
     stages {
           stage('scm') { 
             environment {
-              DUMMY-'FUN'
+              DUMMY='FUN'
             }
             steps {
 
