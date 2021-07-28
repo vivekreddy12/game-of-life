@@ -15,7 +15,8 @@ pipeline {
           }
           stage('build') {
                steps {
-                 sh "mvn ${params.MAVEN}" 
+                 echo env.$GIT_URL
+                 sh 'mvn package' 
                }
           }
      }
