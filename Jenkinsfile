@@ -20,8 +20,9 @@ pipeline {
                steps {
                  echo env.DUMMY
                  echo env.$GIT_URL
-                 timeout (time:10, unit:'MINUTES')
-                 sh 'mvn package' 
+                 timeout(time:10, unit: 'MINUTES') {
+                 sh 'mvn package'
+                 } 
                }
           }
      }
