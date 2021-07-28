@@ -5,7 +5,6 @@ pipeline {
          cron ('H * * * *')
          pollSCM ('* * * * *')
     }
-    parameters { choice(name: 'MAVEN', choices: ['package', 'compile', 'clean package'], description: 'to build perameter') }
     stages {
           stage('scm') { 
             environment {
@@ -26,7 +25,8 @@ pipeline {
                  echo env.$GIT_URL
                  timeout(time:10, unit: 'MINUTES') {
                  retry (3) {
-                   sh "mvn ${params.MAVEN}" 
+                   sh 'mvn package'
+
                  } 
                }
           }
