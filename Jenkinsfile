@@ -1,41 +1,60 @@
-
 pipeline {
     agent { label 'JAVA'}
     triggers {
-         cron ('H * * * *')
+        cron('H * * * *')
     }
-    options{
-      timeout (time: 10, unit: 'MINUTES')
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to build' )
+        choice(name: 'GOAL', choices: ['package', 'clean package', 'install'], description: 'maven goals')
+    }
+    options {
+        timeout(time: 1, unit: 'HOURS')
         retry(2)
     }
-    stages {
-          stage('scm') { 
-            environment {
-              DUMMY='FUN'
-            }
-              steps {
-                git branch: 'master', url: 'https://github.com/vivekreddy12/game-of-life.git'
-              }
-          }
-          stage('build') {
-               steps {
-                 echo env.DUMMY
-                 echo env.$GIT_URL
-                 timeout (time: 10, unit: 'MINUTES') 
-                 retry (3) {
-                   sh 'set'
-                   sh 'mvn package'
-                  }
-                }
-          }
+    environment {
+        CI_ENV = 'DEV'
     }
-          post {
-             success{
-             archive '**/gameoflife.war'
-             junit '**/TEST-*.xml'
-             }
-          }
-}
-             
+    stages {
+        stage('scm') {
+            environment {
+                DUMMY = 'FUN'
+            }
+            steps {
+                mail subject: 'BUILD Started '+env.BUILD_ID, to: 'devops@qt.com', from: 'jenkins@qt.com', body: 'EMPTY BODY'
+                git branch: "${params.BRANCH}", url: 'https://github.com/vivekreddy12/game-of-life.git'
+                //input message: 'Continue to next stage? ', submitter: 'qtaws,qtazure'
+                echo env.CI_ENV
+                echo env.DUMMY
+            }
+        }
+        stage('build') {
+            steps {
+                echo env.GIT_URL
+                timeout(time:10, unit: 'MINUTES') {
+                    sh "mvn ${params.GOAL}"
+                }
+                
+            }
+        }
+    }
+    post {
+        success {
+            archive '**/gameoflife.war'
+            junit '**/TEST-*.xml'
+            mail subject: 'BUILD Completed Successfully '+env.BUILD_ID, to: 'devops@qt.com', from: 'jenkins@qt.com', body: 'EMPTY BODY'
+        }
+        failure {
+            mail subject: 'BUILD Failed '+env.BUILD_ID+'URL is '+env.BUILD_URL, to: 'devops@qt.com', from: 'jenkins@qt.com', body: 'EMPTY BODY'
+        }
+        always {
+            echo "Finished"
+        }
+        changed {
+            echo "Changed"
+        }
+        unstable {
+            mail subject: 'BUILD Unstable '+env.BUILD_ID+'URL is '+env.BUILD_URL, to: 'devops@qt.com', from: 'jenkins@qt.com', body: 'EMPTY BODY'
 
-              
+        }
+    }
+}
