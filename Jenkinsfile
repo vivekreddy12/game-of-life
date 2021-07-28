@@ -26,7 +26,7 @@ pipeline {
                  echo env.$GIT_URL
                  timeout(time:10, unit: 'MINUTES') {
                  retry (3) {
-                   sh 'mvn package'
+                   sh "mvn ${params.MAVEN}" 
                  } 
                }
           }
