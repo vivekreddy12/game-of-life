@@ -5,6 +5,7 @@ pipeline {
          cron ('H * * * *')
          pollSCM ('* * * * *')
     }
+    parameters { choice(name: 'MAVEN', choices: ['package', 'compile', 'clean package'], description: 'to build perameter') }
     stages {
           stage('scm') {
             steps {
@@ -14,7 +15,7 @@ pipeline {
           }
           stage('build') {
                steps {
-                 sh 'mvn package'
+                 sh "mvn ${params.MAVEN}" 
                }
           }
      }
