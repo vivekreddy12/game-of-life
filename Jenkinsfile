@@ -7,7 +7,10 @@ pipeline {
     }
     parameters { choice(name: 'MAVEN', choices: ['package', 'compile', 'clean package'], description: 'to build perameter') }
     stages {
-          stage('scm') {
+          stage('scm') { 
+            environment {
+              DUMMY-'FUN'
+            }
             steps {
 
                 git branch: 'master', url: 'https://github.com/vivekreddy12/game-of-life.git'
@@ -15,6 +18,7 @@ pipeline {
           }
           stage('build') {
                steps {
+                 echo env.DUMMY
                  echo env.$GIT_URL
                  sh 'mvn package' 
                }
