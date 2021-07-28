@@ -6,9 +6,9 @@ pipeline {
          pollSCM ('* * * * *')
     }
     options{
-              timeout (time: 10,m unit: 'HOURS')
-              retry(2)
-            }
+      timeout (time: 10, unit: 'HOURS')
+        retry(2)
+    }
     stages {
           stage('scm') { 
             environment {
