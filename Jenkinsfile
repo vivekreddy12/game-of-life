@@ -26,7 +26,7 @@ pipeline {
         }
         stage('devserver'){
             agent {label 'REDHAT'}
-            STEPS{
+            steps {
                 unstash name: 'golwar'
             }
         }
