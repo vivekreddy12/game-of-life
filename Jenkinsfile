@@ -20,8 +20,8 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'maven package'
-                stash include: '**/gameoflife.war', name: 'golwar'
+                sh 'mvn package'
+                stash includes: '**/gameoflife.war', name: 'golwar'
             }
         }
         stage('devserver'){
